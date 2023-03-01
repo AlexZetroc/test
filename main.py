@@ -1,8 +1,6 @@
 import openai
 import streamlit as st
 import concurrent.futures
-import pyperclip
-
 
 #set the GPT-3 api key
 openai.api_key = st.secrets['pass']
@@ -53,6 +51,6 @@ if (st.button("Submit")):
     st.info(final_response)
     
     # Add a copy button to copy the output answer
-    if st.button("Copy Answer"):
-        pyperclip.copy(final_response)
-        st.write("Output answer has been copied to clipboard.")
+    if st.button("Copy to clipboard"):
+    st.clipboard.copy(final_response)
+    st.success("Copied to clipboard!")
