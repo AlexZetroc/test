@@ -51,6 +51,7 @@ if (st.button("Submit")):
     st.info(final_response)
     
     # Add a copy button to copy the output answer
-    if st.button("Copy to clipboard"):
-        st.clipboard.copy(final_response)
-        st.success("Copied to clipboard!")
+    st.write("Copy to Clipboard:")
+    if st.button("Copy"):
+        st.clipboard_copy(final_response)
+        st.write("Copied!")
