@@ -49,8 +49,8 @@ if (st.button("Submit")):
             final_responses = [future.result() for future in concurrent.futures.as_completed(future_final_responses)]
         final_response = "".join([r["choices"][0]["text"] for r in final_responses])
     st.info(final_response)
-    
+
     # Add a copy button to copy the output answer
-  if st.button("Copy"):
-    st.clipboard_copy(final_response)
-    st.write("Copied!")
+    if st.button("Copy"):
+        st.clipboard_copy(final_response)
+        st.write("Copied!")
