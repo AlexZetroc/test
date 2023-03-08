@@ -11,16 +11,16 @@ openai.api_key = st.secrets['pass']
 
 #Credentials for gspread google sheets
 credentials = {
-  "type": "service_account",
-  "project_id": "test-sales-logs",
-  "private_key_id": "e847b5e46ffe629b2c9ac936ea8da525a96c7eb9",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQCxEB4IkCsYxn4I\nQEuHYwmw2ceWSi8wJiNFjw4cRFFBAEGR8fldy8WvhLkG4YBJR59KC8iTThzsF0s6\niWsDsRHV9lY9kGJraTArrA566NolqQey94XlpYRlfkjk+onEVY/OglTNkTlxdwty\ns2IPhtdKqSTcSCQoUFzUP9stUXz34SVqPrCuvmh93WByKfNQx7zy/PWmkBK1Nfdk\n8ghSay7gEHQULvsSlaVBIdzHJwGpjuec7IKHPa7vey8rs8sMr117bEAfqerMwy1q\nzquYjpBPI+QmUBrExFolH/o/yEBM853SLMo34ZJIlwqG5ucgqVpqq8BkbVS1TPf3\nVyPRD7CFAgMBAAECgf9faXZfQIP4r2O6wbeLFqzIkviG3Yx2cn0PPpQCWprUxagp\nVpSWUCtDXLTxWd9UBARFImEy/4sWR0Po7aPjZi3DEYfnWAzkIT3HF5aCvnc1VAbF\nQ0+9YzO047Gw5R2kod0Cquu62kbaBAw0AsKuTm41DT0pQ4NrnEjP48xEeP5rLUGJ\nPwXkzTFch8htIr4jOFyZxmH02oAnpq3M9ZMGPQkaEKUr11uN2Lo7pxtc0JHtTuGS\niRfK4DMlMZk+d33YV0HcdcGb91SMRe9Kz9QS4B3wcSS9WIkEAMyUF/VjqDgqIUyf\ndT7y1xSbB7Nh0vR7P16WpbQjp9HJcXSBHsdr2iECgYEA5sORJN93+jarUo2KKn5W\n6mAqtyRfR0IY8irvwjAV2ohClgxuSF8N61So+aEaod4xdxzWZk9+YicmaG1yprYS\n8h4l0SJdMwkUSZSg+SbappIlXivexNKmN9knEXfk2bmRD9wE/Ky4yu4udmz0h4NT\n3OKtu2t7JuTWgdBv0sBLtaUCgYEAxG0lUUeTGRNIzC/uzcoQ4cB/UsVNLKzS6dnn\nOgJkEHDbDHMKOYeiTDG6afCn0zyy4aTkWQjDHlmOIVOFRkbG6V2dQADgdF/uM/no\ncH/MnJrU/JgzZoiMJvhibrRfuDAyR4fRYhVwK8HA/jow19tPpJ7hLVweVFXGRf/6\njfMb2WECgYBRZ6X5GvgJBWYUfifCa8UfcwM+jg8qZQ/Fxg3ENBBRggXzRrlUwGt5\nm+jr/sAVX/uVKFAd0WclGuh6qDlsxAgU7zup9fRov4gvmMXcfq9dWWrjOJiiWCkY\nxHr6t4+8mrCoppX/yLJ7q+AqGK9+an6YCkL9PaI5Czr8mloIP5u1nQKBgQCUJQ2E\nI8tZmiXJek1NgB0DZr+gmZX/H8li/ilaovr9O2C6HvmTMizB8q95vzuUIa94Z3ih\nfe5LMZf0op1dx3u1/hjfcMnYe5GYOd+JGZokctI4QEJkDpBFxAfZHskijZceQ90z\ncJ/NILCCDTlRU+LZccq6/0MQsDB+EvXRoY1bgQKBgGBR8bky5+tuNxvjH4ahFvEN\nbwdaawGi2bkeaKGa2cYXo00oQpknqz5k85+khSgcLzNsjdCLzletK7XZmszpcurQ\nThOpeGvGRYs8cTJ1bBcS7mhUrRl0iszHyQEwa3wNrgUScKEbi99mNUh0ustIXAjR\ncNXHBVz3ljU8aQdLj5hV\n-----END PRIVATE KEY-----\n",
-  "client_email": "test-sales-logs@test-sales-logs.iam.gserviceaccount.com",
-  "client_id": "101754412301200293061",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/test-sales-logs%40test-sales-logs.iam.gserviceaccount.com"
+  "type": st.secrets['type'],
+  "project_id": st.secrets['project_id'],
+  "private_key_id": st.secrets["private_key_id"],
+  "private_key": st.secrets["private_key"],
+  "client_email": st.secrets["client_email"],
+  "client_id": st.secrets["client_id"],
+  "auth_uri": st.secrets["auth_uri"],
+  "token_uri": st.secrets["token_uri"],
+  "auth_provider_x509_cert_url": st.secrets["auth_provider_x509_cert_url"],
+  "client_x509_cert_url": st.secrets["client_x509_cert_url"]
 }
 gc = gspread.service_account_from_dict(credentials)
 
