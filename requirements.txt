@@ -2,3 +2,4 @@ openai
 streamlit
 future
 pyperclip
+gspread
