@@ -3,11 +3,39 @@ import streamlit as st
 import concurrent.futures
 import pandas as pd
 import gspread
-
+import clickhouse_connect
 
 
 #set the GPT-3 api key
 openai.api_key = st.secrets['pass']
+
+client = clickhouse_connect.get_client(
+    host = st.secrets["host"],
+    port = st.secrets["port"],
+    secure = st.secrets["secure"],
+    user= st.secrets["user"],
+    password=st.secrets["password"])
+
+
+#query_title = client.query("""
+#SELECT gong_call_title 
+#FROM internal_analytics.stg_gong_calls
+#limit 1
+#""")
+
+#query_transcript = client.query("""
+#SELECT gong_call_transcript_transcript
+#FROM internal_analytics.stg_gong_transcripts
+#limit 1
+#""")                       
+
+query_result = client.query("""
+SELECT gong_call_title, gong_call_transcript_transcript 
+FROM internal_analytics.stg_gong_calls
+JOIN internal_analytics.stg_gong_transcripts
+ON stg_gong_calls.gong_call_id = stg_gong_transcripts.gong_call_id
+limit 1000
+""")
 
 #Credentials for gspread google sheets
 credentials = {
@@ -24,8 +52,7 @@ credentials = {
 }
 gc = gspread.service_account_from_dict(credentials)
 
-
-#establish connection
+#establish connection with gspread
 database = gc.open("sales_test")
 
 #select a worksheet
@@ -33,13 +60,26 @@ wks = database.worksheet("Sheet1")
 
 st.header("Improvado sales app")
 
+result_dict = {row[0]: row[1] for row in query_result.result_set}
+selected_title = st.selectbox("Select a title", list(result_dict.keys()))
+if selected_title:
+    selected_transcript = result_dict[selected_title]
+    st.selectbox("Select a transcript", [selected_transcript])
+    st.write("You selected:", selected_title, "-", selected_transcript)
+    st.session_state.call_text = selected_transcript
+else:
+    st.session_state.call_text = st.text_area("Enter your text to process", max_chars=None)
+processed_text = st.session_state.call_text
+
+
+
 company = st.text_input("Enter company name or call ID")
-call_text = st.text_area("Enter your text to process",max_chars=None)
+call_text = str(selected_transcript)
 question_text = st.text_area("Enter your question")
 temp = st.slider("temperature", 0.0,1.0,0.2)
 
-# Split the input text every 12000 characters
-text_parts = [call_text[i:i+12000] for i in range(0, len(call_text), 12000)]
+# Split the input text every 10000 characters
+text_parts = [call_text[i:i+10000] for i in range(0, len(call_text), 10000)]
 
 if (st.button("Submit")):
     with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -61,9 +101,9 @@ if (st.button("Submit")):
         temperature = temp
     )
     final_response = final_response["choices"][0]["text"]
-    while len(final_response) > 12000:
+    while len(final_response) > 10000:
         # Split the final_response every 12000 characters
-        final_parts = [final_response[i:i+12000] for i in range(0, len(final_response), 12000)]
+        final_parts = [final_response[i:i+10000] for i in range(0, len(final_response), 10000)]
         with concurrent.futures.ThreadPoolExecutor() as executor:
             # Use the executor to submit all the requests at the same time
             future_final_responses = [executor.submit(openai.Completion.create,
