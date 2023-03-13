@@ -3,3 +3,4 @@ streamlit
 future
 pyperclip
 gspread
+clickhouse-connect
