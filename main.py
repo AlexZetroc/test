@@ -64,7 +64,7 @@ result_dict = {row[0]: row[1] for row in query_result.result_set}
 selected_title = st.selectbox("Select a title", list(result_dict.keys()))
 if selected_title:
     selected_transcript = result_dict[selected_title]
-    st.selectbox("Select a transcript", [selected_transcript])
+    #st.selectbox("Select a transcript", [selected_transcript])
     st.write("You selected:", selected_title, "-", selected_transcript)
     st.session_state.call_text = selected_transcript
 else:
