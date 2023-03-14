@@ -61,7 +61,7 @@ wks = database.worksheet("Sheet1")
 url_link = 'https://forms.gle/5irQryzKNSaJkUuRA'
 
 st.header("Improvado sales app")
-st.markdown(f'<a href="{url_link}"Feel free to share feedbak about our sales application</a>', unsafe_allow_html=True)
+st.markdown(f'<a href="{url_link}">Feel free to share feedbak about our sales application</a>', unsafe_allow_html=True)
 
 result_dict = {row[0]: row[1] for row in query_result.result_set}
 selected_title = st.selectbox("Select a title", list(result_dict.keys()))
