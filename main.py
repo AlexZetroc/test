@@ -58,8 +58,11 @@ database = gc.open("sales_test")
 #select a worksheet
 wks = database.worksheet("Sheet1")
 
+url_link = 'https://forms.gle/5irQryzKNSaJkUuRA'
+
 st.header("Improvado sales app")
-st.text("Feel free to share feedback about our sales application https://forms.gle/5irQryzKNSaJkUuRA")
+st.text("Feel free to share feedbak about our sales application.")
+st.markdown(f'<a href="{url_link}">https://forms.gle/5irQryzKNSaJkUuRA</a>', unsafe_allow_html=True)
 
 result_dict = {row[0]: row[1] for row in query_result.result_set}
 selected_title = st.selectbox("Select a title", list(result_dict.keys()))
