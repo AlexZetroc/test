@@ -73,7 +73,7 @@ processed_text = st.session_state.call_text
 
 
 
-company = st.text_input("Enter company name or call ID")
+#company = st.text_input("Enter company name or call ID")
 call_text = str(selected_transcript)
 question_text = st.text_area("Enter your question")
 temp = st.slider("temperature", 0.0,1.0,0.2)
