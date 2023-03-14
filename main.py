@@ -22,7 +22,6 @@ SELECT gong_call_title, gong_call_transcript_full_text
 FROM internal_analytics.stg_gong_calls
 JOIN internal_analytics.stg_gong_transcripts
 ON stg_gong_calls.gong_call_id = stg_gong_transcripts.gong_call_id
-LIMIT 10
 """)
                             
 #Credentials for gspread google sheets
