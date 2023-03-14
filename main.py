@@ -15,28 +15,16 @@ client = clickhouse_connect.get_client(
     secure = st.secrets["secure"],
     user= st.secrets["user"],
     password=st.secrets["password"])
-
-
-#query_title = client.query("""
-#SELECT gong_call_title 
-#FROM internal_analytics.stg_gong_calls
-#limit 1
-#""")
-
-#query_transcript = client.query("""
-#SELECT gong_call_transcript_transcript
-#FROM internal_analytics.stg_gong_transcripts
-#limit 1
-#""")                       
+             
 
 query_result = client.query("""
-SELECT gong_call_title, gong_call_transcript_transcript 
+SELECT gong_call_title, gong_call_transcript_full_text     
 FROM internal_analytics.stg_gong_calls
 JOIN internal_analytics.stg_gong_transcripts
 ON stg_gong_calls.gong_call_id = stg_gong_transcripts.gong_call_id
-limit 1000
+LIMIT 10
 """)
-
+                            
 #Credentials for gspread google sheets
 credentials = {
   "type": st.secrets['type'],
@@ -68,7 +56,7 @@ selected_title = st.selectbox("Select a title", list(result_dict.keys()))
 if selected_title:
     selected_transcript = result_dict[selected_title]
     #st.selectbox("Select a transcript", [selected_transcript])
-    st.write("You selected:", selected_title, "-", selected_transcript)
+    #st.write("You selected:", selected_title, "-", selected_transcript)
     st.session_state.call_text = selected_transcript
 else:
     st.session_state.call_text = st.text_area("Enter your text to process", max_chars=None)
@@ -76,7 +64,7 @@ processed_text = st.session_state.call_text
 
 
 
-#company = st.text_input("Enter company name or call ID")
+company = " "
 call_text = str(selected_transcript)
 question_text = st.text_area("Enter your question")
 temp = st.slider("temperature", 0.0,1.0,0.2)
